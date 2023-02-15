@@ -13,4 +13,4 @@ async def on_start(message: types.Message, state: FSMContext):
     await bot.send_message(message.chat.id, md.text(f'👋 Привет, {md.bold(message.from_user.full_name)}! Я бот, который поможет тебе управлять VDS.'), parse_mode=types.ParseMode.MARKDOWN, reply_markup = default_keyboard)
 
 def setup(dp: Dispatcher):
-    dp.register_message_handler(on_start, commands = ['start', 'welcome'])
+    dp.register_message_handler(on_start, commands = ['start'])
