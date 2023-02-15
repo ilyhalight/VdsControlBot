@@ -4,7 +4,7 @@
 
 ⭐ Поставьте звездочку на GitHub — это очень мотивирует!
 
-**VdsControlBot** - это телеграм бот для удобного мониторинга и управления вашими виртуальными серверами по SSH. Бот написан на Python с использованием библиотеки [aiogram v2](https://aiogram.dev/) и paramiko (чуть позже перепишу на asyncSSH). 
+**VdsControlBot** - это телеграм бот для удобного мониторинга и управления вашими виртуальными серверами по SSH. Бот написан на Python с использованием библиотеки [aiogram v2](https://aiogram.dev/) и [asyncssh](https://asyncssh.readthedocs.io/en/latest/).
 
 ![VdsControlBot Preview](https://i.imgur.com/uJOB94B.png)
 
