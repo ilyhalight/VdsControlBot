@@ -52,3 +52,38 @@ async def get_info(ip: str, user: str, secret: str, port: int = 22):
         'memory': memory,
         'disks': disks
     }
+
+async def get_status(ip: str, user: str, secret: str, port: int = 22):
+    try:
+        test_output = await enter_command((ip, user, secret, port), 'echo "OK"')
+    except PermissionDenied:
+        return {
+            'status': False,
+            'error': '❌ Неверный логин или пароль',
+            'message': '❌'
+        }
+    except gaierror:
+        return {
+            'status': False,
+            'error': '❌ Неверный IP адрес',
+            'message': '❌'
+        }
+    except Exception as err:
+        logger.exception(err)
+        return {
+            'status': False,
+            'error': '❌ Не удалось получить информацию о сервере',
+            'message': '❌'
+        }
+
+    if test_output == 'OK\n':
+        return {
+            'status': True,
+            'message': '✅'
+        }
+    else:
+        return {
+            'status': True,
+            'error': '❌ Не соответствует ожидаемому ответу',
+            'message': '❌'
+        }
