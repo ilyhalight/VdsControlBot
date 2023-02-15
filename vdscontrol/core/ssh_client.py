@@ -1,27 +1,16 @@
-import paramiko
 import logging
+import asyncssh
 
 logger = logging.getLogger(__name__)
 
-client = paramiko.SSHClient()
-client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
+async def open_connection(host: str, user: str, secret: str, port: int = 22):
+    conn, client = await asyncssh.create_connection(asyncssh.SSHClient, host = host, port = port, username = user, password = secret, known_hosts=None)
+    return conn, client
 
-def open_connection(host, user, secret, port = 22):
-    client.connect(hostname=host, username=user, password=secret, port=port)
-
-def check_connection():
-    if client.get_transport().is_active() == True:
-        logger.debug('Connection is active')
-        return True
-    else:
-        logger.debug('Connection is not active')
-        return False
-
-def enter_command(command):
-    stdin, stdout, stderr = client.exec_command(command)
-    data = stdout.read() + stderr.read()
-    return data.decode()
-
-def close_connection():
-    client.close()
+async def enter_command(data: list, command: str):
+    conn, client = await open_connection(*data)
+    async with conn:
+        result = await conn.run(command)
+        data = result.stdout + result.stderr
+        return data
