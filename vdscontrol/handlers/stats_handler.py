@@ -53,7 +53,7 @@ async def get_stats(message: types.Message, state: FSMContext):
         return await bot.send_message(message.chat.id, '❌ Не удалось получить информацию о сервере', reply_markup=default_keyboard)
 
     try:
-        vds_data = get_info(server_data['ip'], server_data['username'], server_data['password'], int(server_data['port']))
+        vds_data = await get_info(server_data['ip'], server_data['username'], server_data['password'], int(server_data['port']))
     except Exception as err:
         logger.exception(err)
         await state.finish()
