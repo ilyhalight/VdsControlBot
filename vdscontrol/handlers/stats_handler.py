@@ -66,7 +66,7 @@ async def get_stats(message: types.Message, state: FSMContext):
     await bot.send_message(message.chat.id,
     md.text(
         md.bold('Информация о сервере:'),
-        md.bold('Name: ') + md.bold(md.escape_md(server_data['name'])),
+        md.bold('Name: ') + md.escape_md(server_data['name']),
         md.bold('IP: ') + md.escape_md(server_data['ip']),
         md.bold('OS: ') + md.escape_md(vds_data['os']),
         md.bold('Host: ') + md.escape_md(vds_data['host']),
