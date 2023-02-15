@@ -89,7 +89,7 @@ async def add_vds_confirm(message: types.Message, state: FSMContext):
 
 def setup(dp: Dispatcher):
     dp.register_message_handler(add_vds, Text(equals = '💻 Добавить сервер'), state='*')
-    dp.register_message_handler(add_vds, commands=['add_vds'], state='*')
+    dp.register_message_handler(add_vds, commands=['add'], state='*')
     dp.register_message_handler(add_vds_name, state=AddVDS.name)
     dp.register_message_handler(add_vds_ip, state=AddVDS.ip)
     dp.register_message_handler(add_vds_port, state=AddVDS.port)
