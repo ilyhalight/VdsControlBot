@@ -4,10 +4,11 @@ from aiogram.dispatcher.filters import Text
 import aiogram.utils.markdown as md
 from aiogram.dispatcher import FSMContext
 
-from configs.json_works import remove_json
+from configs.json_works import remove_json, read_json
 from core.bot import bot
 from keyboards.yes_or_no import yes_or_no_keyboard, yes_or_no_phrases
 from keyboards.default import default_keyboard
+from keyboards.servers import build_servers_keyboard
 from states.remove_vds import RemoveVDS
 
 logger = logging.getLogger(__name__)
@@ -16,7 +17,17 @@ async def remove_vds(message: types.Message, state: FSMContext):
     if message.from_user.id != bot._settings['chat_id']:
         return await message.answer('❌ У вас нет доступа к этой команде')
 
-    await message.answer('Введите имя сервера, который хотите удалить.')
+    try:
+        data = await read_json()
+    except Exception as err:
+        logger.exception(err)
+        data = None
+
+    if not data:
+        state.finish()
+        return await bot.send_message(message.chat.id, '❌ Не удалось получить информацию о серверах', reply_markup=default_keyboard)
+
+    await bot.send_message(message.chat.id, 'Выберите сервер для удаления:', reply_markup = build_servers_keyboard(data))
     await state.set_state(RemoveVDS.name)
 
 async def remove_vds_name(message: types.Message, state: FSMContext):
