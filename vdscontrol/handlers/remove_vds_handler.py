@@ -53,7 +53,7 @@ async def remove_vds_confirm_error(message: types.Message, state: FSMContext):
 
 def setup(dp: Dispatcher):
     dp.register_message_handler(remove_vds, Text(equals = '🗑 Удалить сервер'), state='*')
-    dp.register_message_handler(remove_vds, commands=['remove'], state='*')
+    dp.register_message_handler(remove_vds, commands=['remove', 'delete'], state='*')
     dp.register_message_handler(remove_vds_name, state=RemoveVDS.name)
     dp.register_message_handler(remove_vds_confirm, Text(equals = yes_or_no_phrases), state=RemoveVDS.confirm)
     dp.register_message_handler(remove_vds_confirm_error,  state=RemoveVDS.confirm)
