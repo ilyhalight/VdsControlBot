@@ -5,6 +5,7 @@ import aiogram.utils.markdown as md
 
 from configs.json_works import read_json
 from core.bot import bot
+from core.commands import get_status
 from keyboards.default import default_keyboard
 
 logger = logging.getLogger(__name__)
@@ -19,7 +20,15 @@ async def list(message: types.Message):
         logger.exception(err)
         data = None
 
-    servers = '\n'.join((f'{server["name"]} - {server["ip"]}' for server in data)) if data else 'Список пуст'
+    await bot.send_animation(message.chat.id, 'https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif')
+
+    if data:
+        servers = ''
+        for server in data:
+            res = await get_status(server['ip'], server['username'], server['password'], int(server['port']))
+            servers += f'{res["message"]} {server["name"]} - {server["ip"]}\n'
+    else:
+        servers = 'Список пуст'
 
     await bot.send_message(message.chat.id,
     md.text(
