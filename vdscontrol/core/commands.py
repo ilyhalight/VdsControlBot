@@ -1,8 +1,7 @@
 import logging
 from socket import gaierror
-from paramiko import AuthenticationException
 from asyncssh import PermissionDenied
-from core.ssh_client import open_connection, enter_command
+from core.ssh_client import enter_command
 
 logger = logging.getLogger(__name__)
 
