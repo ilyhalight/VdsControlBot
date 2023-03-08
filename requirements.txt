@@ -1,4 +1,4 @@
-aiogram=>2.24
+aiogram>=2.24
 tomli >= 1.1.0 ; python_version < "3.11"
 python-dotenv>=0.18.0
 rich>=12.3.0
